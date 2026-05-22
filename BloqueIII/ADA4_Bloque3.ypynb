@@ -1,0 +1,142 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNV+6knBcFYBYZReonO79E2",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/tomassantiago-upp/intro-programacion-upp/blob/main/BloqueIII/ADA4_Bloque3.ypynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "7vU8-xbN8i5N",
+        "outputId": "c8fd949f-ecd1-4a87-938e-185fd2938e03"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "--- SISTEMA DE GESTIÓN DE EMPLEADOS ---\n",
+            "\n",
+            "Empleado: Tomás de Jesús\n",
+            "Puesto: Desarrollador\n",
+            "Pago de este mes: $17,000.00\n",
+            "------------------------------\n",
+            "Empleado: Paola Rodríguez\n",
+            "Puesto: Gerente\n",
+            "Pago de este mes: $28,750.00\n",
+            "------------------------------\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Definición de la clase padre\n",
+        "class Empleado:\n",
+        "    def __init__(self, nombre, salario_base):\n",
+        "        self.nombre = nombre\n",
+        "        self.salario_base = salario_base\n",
+        "\n",
+        "    def calcular_pago(self):\n",
+        "        return self.salario_base\n",
+        "\n",
+        "    def mostrar_detalles(self):\n",
+        "        print(f\"Empleado: {self.nombre}\")\n",
+        "        print(f\"Puesto: {self.__class__.__name__}\")\n",
+        "        print(f\"Pago de este mes: ${self.calcular_pago():,.2f}\")\n",
+        "        print(\"-\" * 30)\n",
+        "\n",
+        "# Creación de clases hija\n",
+        "class Desarrollador(Empleado):\n",
+        "    def __init__(self, nombre, salario_base, lenguaje_principal):\n",
+        "        # Llamada al constructor de la clase base\n",
+        "        super().__init__(nombre, salario_base)\n",
+        "        self.lenguaje_principal = lenguaje_principal\n",
+        "\n",
+        "    # Polimorfismo: Redefinición del método calcular_pago\n",
+        "    def calcular_pago(self):\n",
+        "        bono_desarrollador = 2000\n",
+        "        return self.salario_base + bono_desarrollador\n",
+        "\n",
+        "\n",
+        "class Gerente(Empleado):\n",
+        "    def __init__(self, nombre, salario_base, proyecto_asignado):\n",
+        "        # Llamada al constructor de la clase base\n",
+        "        super().__init__(nombre, salario_base)\n",
+        "        self.proyecto_asignado = proyecto_asignado\n",
+        "\n",
+        "    # Polimorfismo: Redefinición del método calcular_pago\n",
+        "    def calcular_pago(self):\n",
+        "        bono_gerente = self.salario_base * 0.15\n",
+        "        return self.salario_base + bono_gerente\n",
+        "\n",
+        "\n",
+        "if __name__ == \"__main__\":\n",
+        "    print(\"--- SISTEMA DE GESTIÓN DE EMPLEADOS ---\\n\")\n",
+        "\n",
+        "    # Creación de instancias (objetos)\n",
+        "    dev1 = Desarrollador(\"Tomás de Jesús\", 15000, \"Python\")\n",
+        "    gerente1 = Gerente(\"Paola Rodríguez\", 25000, \"Plataforma Educativa Immersiva\")\n",
+        "\n",
+        "    # Lista de empleados (Demostración de Polimorfismo)\n",
+        "    lista_empleados = [dev1, gerente1]\n",
+        "\n",
+        "    # Ejecución del ciclo\n",
+        "    for empleado in lista_empleados:\n",
+        "        # Cada objeto ejecuta su propia versión de calcular_pago()\n",
+        "        # a través del método mostrar_detalles()\n",
+        "        empleado.mostrar_detalles()"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# ADA 4.\n",
+        "\n",
+        "# CÓDIGO A REFACTORIZAR (No pueden usar IFs en la solución final)\n",
+        "class GestorEnvios:\n",
+        "    def procesar_envio(self, tipo_transporte, distancia, peso):\n",
+        "        if tipo_transporte == \"Drone\":\n",
+        "            if distancia > 15:\n",
+        "                return \"Error: Excede rango\"\n",
+        "            return (distancia * 5) + (peso * 2)\n",
+        "        elif tipo_transporte == \"Motocicleta\":\n",
+        "            return (distancia * 2) + 10 # Tarifa fija de 10\n",
+        "        elif tipo_transporte == \"Camion\":\n",
+        "            # Los camiones cobran un 15% extra de impuestos sobre el peso\n",
+        "            return (distancia * 1.5) + (peso * 4 * 1.15)\n",
+        "        else:\n",
+        "            return \"Transporte no soportado\""
+      ],
+      "metadata": {
+        "id": "RwPB3q3pCC5D"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
